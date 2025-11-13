@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김채희 - 시각디자이너 포트폴리오</title>
+    <style>
+        /* 전역 스타일 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 스무스 스크롤 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* 기본 폰트 및 색상 설정 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #E3F2FD;
+            overflow-x: hidden;
+        }
+
+        /* 네비게이션 바 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(21, 101, 192, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #42A5F5;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* 히어로 섹션 - 매거진 스타일 */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #42A5F5 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(-15deg);
+            transition: transform 0.6s ease;
+        }
+
+        .hero:hover::before {
+            transform: rotate(-12deg) scale(1.1);
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 1;
+            animation: slideInLeft 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            color: white;
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            letter-spacing: -3px;
+        }
+
+        .hero .subtitle {
+            font-size: 2rem;
+            color: #E3F2FD;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .hero .intro {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            animation: slideInRight 1s ease;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: transform 0.6s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        /* About 섹션 - 비대칭 레이아웃 */
+        .about {
+            padding: 6rem 2rem;
+            background: white;
+            position: relative;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            animation: fadeInUp 1s ease;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            color: #1565C0;
+            margin-bottom: 2rem;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: #42A5F5;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0 #42A5F5;
+            transition: all 0.6s ease;
+        }
+
+        .about-image img:hover {
+            transform: translate(-10px, -10px);
+            box-shadow: 30px 30px 0 #42A5F5;
+        }
+
+        /* Skills 섹션 - 매거진 그리드 */
+        .skills {
+            padding: 6rem 2rem;
+            background: #E3F2FD;
+        }
+
+        .skills-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(21, 101, 192, 0.1);
+            transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(66, 165, 245, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .skill-card:hover::before {
+            left: 100%;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 20px 40px rgba(21, 101, 192, 0.2);
+        }
+
+        .skill-card h3 {
+            color: #1565C0;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-bar {
+            background: #E3F2FD;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #1565C0, #42A5F5);
+            transition: width 1s ease;
+        }
+
+        /* Projects 섹션 - 역동적 레이아웃 */
+        .projects {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background: #E3F2FD;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.6s ease;
+        }
+
+        .project-card:nth-child(even) {
+            grid-template-columns: 1fr 1fr;
+            direction: rtl;
+        }
+
+        .project-card:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(21, 101, 192, 0.2);
+        }
+
+        .project-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .project-info h3 {
+            color: #1565C0;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-info p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #1565C0;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: #42A5F5;
+            transform: translateY(-2px);
+        }
+
+        /* Contact 섹션 */
+        .contact {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact .section-title::after {
+            background: #42A5F5;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.6s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-link span {
+            display: block;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-link strong {
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #0d47a1;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer a {
+            color: #42A5F5;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #E3F2FD;
+        }
+
+        /* 애니메이션 */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 6rem 2rem 4rem;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero-content {
+                align-items: center;
+            }
+
+            .hero .intro {
+                text-align: center;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-card,
+            .project-card:nth-child(even) {
+                grid-template-columns: 1fr;
+                direction: ltr;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        /* 스크롤 애니메이션을 위한 클래스 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>김채희</h1>
+            <div class="subtitle">시각디자이너</div>
+            <p class="intro">포말</p>
+        </div>
+        <div class="hero-image">
+            <img src="https://via.placeholder.com/400x500/1565C0/FFFFFF?text=Profile" alt="김채희 프로필">
+        </div>
+    </section>
+
+    <!-- About 섹션 -->
+    <section id="about" class="about">
+        <div class="about-container">
+            <div class="about-text fade-in">
+                <h2 class="section-title">About Me</h2>
+                <p>안녕하세요, 시각디자이너 김채희입니다.</p>
+                <p>저는 브랜드의 본질을 시각적으로 풀어내는 일에 열정을 가지고 있습니다. 클라이언트의 메시지를 효과적으로 전달하면서도 창의적이고 독창적인 디자인을 추구합니다.</p>
+                <p>에디토리얼 디자인, 브랜딩, UI/UX 디자인 등 다양한 영역에서 프로젝트를 진행해왔으며, 항상 새로운 트렌드와 기술을 학습하며 성장하고 있습니다.</p>
+            </div>
+            <div class="about-image fade-in">
+                <img src="https://via.placeholder.com/400x500/42A5F5/FFFFFF?text=About+Me" alt="About Me">
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills 섹션 -->
+    <section id="skills" class="skills">
+        <div class="skills-container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card fade-in">
+                    <h3>Adobe Photoshop</h3>
+                    <p>사진 편집 및 그래픽 디자인</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 95%"></div>
+                    </div>
+                </div>
+                <div class="skill-card fade-in">
+                    <h3>Adobe Illustrator</h3>
+                    <p>벡터 그래픽 및 로고 디자인</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="skill-card fade-in">
+                    <h3>Adobe InDesign</h3>
+                    <p>에디토리얼 및 레이아웃 디자인</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                </div>
+                <div class="skill-card fade-in">
+                    <h3>Figma</h3>
+                    <p>UI/UX 디자인 및 프로토타이핑</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 88%"></div>
+                    </div>
+                </div>
+                <div class="skill-card fade-in">
+                    <h3>Branding</h3>
+                    <p>브랜드 아이덴티티 구축</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 92%"></div>
+                    </div>
+                </div>
+                <div class="skill-card fade-in">
+                    <h3>Typography</h3>
+                    <p>타이포그래피 디자인</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 87%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects 섹션 -->
+    <section id="projects" class="projects">
+        <div class="projects-container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/600x400/1565C0/FFFFFF?text=Brand+Identity" alt="프로젝트 1">
+                    </div>
+                    <div class="project-info">
+                        <h3>브랜드 아이덴티티 디자인</h3>
+                        <p>스타트업을 위한 브랜드 아이덴티티 전체를 구축한 프로젝트입니다. 로고, 명함, 브로슈어 등 다양한 인쇄물과 웹 디자인까지 일관된 브랜드 이미지를 구현했습니다.</p>
+                        <div class="project-tags">
+                            <span class="tag">Branding</span>
+                            <span class="tag">Logo Design</span>
+                            <span class="tag">Print Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/600x400/1976D2/FFFFFF?text=Magazine+Layout" alt="프로젝트 2">
+                    </div>
+                    <div class="project-info">
+                        <h3>매거진 에디토리얼 디자인</h3>
+                        <p>패션 매거진의 에디토리얼 디자인 작업으로, 독창적인 레이아웃과 타이포그래피를 통해 콘텐츠의 시각적 흐름을 극대화했습니다.</p>
+                        <div class="project-tags">
+                            <span class="tag">Editorial</span>
+                            <span class="tag">Typography</span>
+                            <span class="tag">Layout</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/600x400/42A5F5/FFFFFF?text=UI+Design" alt="프로젝트 3">
+                    </div>
+                    <div class="project-info">
+                        <h3>모바일 앱 UI/UX 디자인</h3>
+                        <p>사용자 중심의 직관적인 인터페이스를 설계한 모바일 앱 디자인 프로젝트입니다. 사용성 테스트를 통해 최적화된 사용자 경험을 제공했습니다.</p>
+                        <div class="project-tags">
+                            <span class="tag">UI/UX</span>
+                            <span class="tag">Mobile</span>
+                            <span class="tag">Prototyping</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/600x400/1565C0/FFFFFF?text=Poster+Design" alt="프로젝트 4">
+                    </div>
+                    <div class="project-info">
+                        <h3>문화 행사 포스터 디자인</h3>
+                        <p>지역 문화 행사를 위한 포스터 시리즈 디자인입니다. 강렬한 색감과 타이포그래피로 행사의 특성을 효과적으로 전달했습니다.</p>
+                        <div class="project-tags">
+                            <span class="tag">Poster</span>
+                            <span class="tag">Typography</span>
+                            <span class="tag">Visual Identity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact 섹션 -->
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <h2 class="section-title">Contact</h2>
+            <p style="margin-top: 2rem; font-size: 1.2rem;">프로젝트 문의나 협업 제안은 언제든 환영합니다!</p>
+            <div class="contact-links">
+                <a href="mailto:chaehee.kim@email.com" class="contact-link">
+                    <span>Email</span>
+                    <strong>chaehee.kim@email.com</strong>
+                </a>
+                <a href="https://instagram.com/chaehee_design" target="_blank" class="contact-link">
+                    <span>Instagram</span>
+                    <strong>@chaehee_design</strong>
+                </a>
+                <a href="https://linkedin.com/in/chaeheekim" target="_blank" class="contact-link">
+                    <span>LinkedIn</span>
+                    <strong>김채희</strong>
+                </a>
+                <a href="https://behance.net/chaeheekim" target="_blank" class="contact-link">
+                    <span>Behance</span>
+                    <strong>chaeheekim</strong>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 김채희. Powered by <a href="https://ai.triz.kr" target="_blank">AI Portfolio Workshop</a>.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 스크롤 애니메이션
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        // fade-in 클래스를 가진 모든 요소 관찰
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 네비게이션 배경 투명도 조절
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(21, 101, 192, 0.98)';
+                nav.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                nav.style.background = 'rgba(21, 101, 192, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 70; // 네비게이션 높이만큼 오프셋
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 스킬 바 애니메이션
+        const skillCards = document.querySelectorAll('.skill-card');
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progress = entry.target.querySelector('.skill-progress');
+                    const width = progress.style.width;
+                    progress.style.width = '0';
+                    setTimeout(() => {
+                        progress.style.width = width;
+                    }, 200);
+                    skillObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillCards.forEach(card => {
+            skillObserver.observe(card);
+        });
+    </script>
+</body>
+</html>
